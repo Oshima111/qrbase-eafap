@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// --- Reusable Icon Component ---
 const Icon = ({ path, className = "w-5 h-5" }) => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
@@ -17,10 +16,8 @@ const Icon = ({ path, className = "w-5 h-5" }) => (
 
 const QR = () => {
   const navigate = useNavigate();
-  // Stages: 'initial' | 'scanning' | 'verified' | 'success'
   const [scanStep, setScanStep] = useState('initial');
 
-  // Logic to simulate the automated scanning transition
   useEffect(() => {
     if (scanStep === 'scanning') {
       const timer = setTimeout(() => setScanStep('verified'), 2000);

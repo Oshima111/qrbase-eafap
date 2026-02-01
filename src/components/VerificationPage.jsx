@@ -59,7 +59,6 @@ export default function VerificationPage() {
           </div>
 
           <div className="flex gap-8 items-center border-l pl-8 border-gray-100">
-            {/* UPDATED: LOG IN - Blue text only */}
             <button 
               onClick={() => navigate("/login")}
               className="text-blue-600 hover:text-gray-400 transition-colors font-black text-sm uppercase tracking-widest outline-none bg-transparent border-none p-0 cursor-pointer"

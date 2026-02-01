@@ -6,7 +6,6 @@ export default function ResultPage() {
   const location = useLocation();
   const success = location.state?.success ?? true;
 
-  // Fade-in animation
   const [visible, setVisible] = useState(false);
   useEffect(() => {
     const timeout = setTimeout(() => setVisible(true), 100);
@@ -26,7 +25,6 @@ export default function ResultPage() {
         </h1>
         <nav className="hidden md:flex items-center gap-10">
           <div className="flex gap-8 text-sm font-bold items-center uppercase tracking-widest">
-            {/* UPDATED: Home button redirects to "/" */}
             <button 
               onClick={() => navigate("/home")} 
               className="text-blue-600 hover:text-gray-400 transition-colors bg-transparent border-none p-0 font-bold text-sm uppercase tracking-widest cursor-pointer outline-none"
@@ -38,7 +36,6 @@ export default function ResultPage() {
           </div>
 
           <div className="flex gap-8 items-center border-l pl-8 border-gray-100">
-            {/* UPDATED: LOG IN - Blue text only */}
             <button 
               onClick={() => navigate("/login")}
               className="text-blue-600 hover:text-gray-400 transition-colors font-black text-sm uppercase tracking-widest outline-none bg-transparent border-none p-0 cursor-pointer"
@@ -102,7 +99,6 @@ export default function ResultPage() {
       <footer className="bg-white border-t border-gray-100 px-12 py-5 flex justify-between items-center text-[10px] font-bold text-gray-400 uppercase tracking-widest shrink-0">
         <div>© 2026 QRBase Meetings</div>
         <nav className="flex gap-8 items-center">
-          {/* Added Home to footer for consistency */}
           <button 
             onClick={() => navigate("/home")} 
             className="text-blue-600 hover:text-gray-400 transition-colors bg-transparent border-none p-0 font-bold text-[10px] uppercase tracking-widest cursor-pointer outline-none"

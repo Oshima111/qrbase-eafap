@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// --- Reusable Icon Component ---
 const Icon = ({ path, className = "w-5 h-5" }) => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
@@ -18,6 +17,7 @@ const Icon = ({ path, className = "w-5 h-5" }) => (
 const ParticipantDash = () => {
   const navigate = useNavigate();
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
   
   // Mock Data
   const events = [
@@ -25,7 +25,11 @@ const ParticipantDash = () => {
     { id: 2, title: "RESEARCH SEMINAR", date: "15 JAN 2026", location: "Room 402", status: "Completed", description: "A deep dive into modern data structures and algorithmic efficiency." },
   ];
 
-  // Updated paths to match App.js: /participant and /qr
+  const filteredEvents = events.filter(event => 
+    event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    event.location.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   const sidebarLinks = [
     { name: "My Events", path: "/participant", icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" },
     { name: "QR Codes", path: "/qr", icon: "M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" },
@@ -52,7 +56,7 @@ const ParticipantDash = () => {
             <p className="text-xs leading-relaxed text-slate-400 font-medium mb-8">{selectedEvent.description}</p>
             <button 
               onClick={() => navigate('/qr')} 
-              className="w-full bg-[#1e293b] text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-black transition-all"
+              className="w-full bg-[#1e293b] text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-black transition-all active:scale-95"
             >
               {selectedEvent.status === 'Upcoming' ? 'Go to QR Scanner' : 'View Certificate'}
             </button>
@@ -80,7 +84,7 @@ const ParticipantDash = () => {
               <button 
                 key={link.name} 
                 onClick={() => navigate(link.path)} 
-                className={`flex items-center w-full py-3.5 px-3 rounded-2xl transition-all ${link.path === "/participant" ? "bg-[#2563eb] text-white" : "text-slate-400 hover:bg-[#2563eb] hover:text-white"}`}
+                className={`flex items-center w-full py-3.5 px-3 rounded-2xl transition-all active:scale-95 ${link.path === "/participant" ? "bg-[#2563eb] text-white" : "text-slate-400 hover:bg-[#2563eb] hover:text-white"}`}
               >
                 <div className="min-w-[24px] flex justify-center"><Icon path={link.icon} /></div>
                 <span className="ml-4 opacity-0 group-hover:opacity-100 transition-opacity font-black text-[11px] uppercase tracking-widest whitespace-nowrap">{link.name}</span>
@@ -88,7 +92,7 @@ const ParticipantDash = () => {
             ))}
           </div>
           <div className="p-4 mb-2">
-            <button onClick={() => navigate('/login')} className="flex items-center w-full py-3.5 px-3 rounded-2xl text-red-400 hover:bg-red-500 hover:text-white transition-all">
+            <button onClick={() => navigate('/login')} className="flex items-center w-full py-3.5 px-3 rounded-2xl text-red-400 hover:bg-red-500 hover:text-white transition-all active:scale-95">
               <div className="min-w-[24px] flex justify-center"><Icon path="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" /></div>
               <span className="ml-4 opacity-0 group-hover:opacity-100 transition-opacity font-black text-[11px] uppercase tracking-widest whitespace-nowrap">Log Out</span>
             </button>
@@ -98,23 +102,60 @@ const ParticipantDash = () => {
         {/* MAIN CONTENT */}
         <main className="flex-1 ml-24 p-8 overflow-y-auto">
           <div className="max-w-5xl mx-auto flex flex-col gap-6">
-            <div className="px-4">
-              <h2 className="text-3xl font-black text-[#1e40af] tracking-tight uppercase leading-none">Overview</h2>
-              <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Participant Portal</span>
+            
+            {/* Page Title & Search Bar Area */}
+            <div className="px-4 flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div>
+                <h2 className="text-3xl font-black text-[#1e40af] tracking-tight uppercase leading-none">Overview</h2>
+                <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Participant Portal</span>
+              </div>
+              
+              {/* SEARCH BAR */}
+              <div className="relative w-full md:w-80">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-blue-500">
+                  <Icon path="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" className="w-4 h-4" />
+                </div>
+                <input 
+                  type="text"
+                  placeholder="SEARCH EVENTS..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-white border-2 border-slate-100 rounded-2xl py-3.5 pl-11 pr-4 text-[10px] font-black uppercase tracking-widest outline-none focus:border-[#2563eb] shadow-sm transition-all"
+                />
+              </div>
             </div>
 
             <section className="bg-white rounded-[2.5rem] shadow-xl p-10 min-h-[600px]">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {events.map(event => (
-                  <div key={event.id} onClick={() => setSelectedEvent(event)} className="group bg-[#f8fafc] p-8 rounded-[2.5rem] border-2 border-transparent hover:border-blue-100 hover:shadow-lg transition-all cursor-pointer">
-                    <div className="flex justify-between items-start mb-6">
-                      <div className="w-12 h-12 bg-white text-blue-600 rounded-2xl flex items-center justify-center shadow-sm"><Icon path="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></div>
-                      <span className={`text-[8px] font-black uppercase tracking-widest px-3 py-1 rounded-full ${event.status === 'Upcoming' ? 'bg-blue-50 text-blue-600' : 'bg-green-50 text-green-600'}`}>{event.status}</span>
+                {filteredEvents.length > 0 ? (
+                  filteredEvents.map(event => (
+                    <div 
+                      key={event.id} 
+                      onClick={() => setSelectedEvent(event)} 
+                      className="group bg-[#f8fafc] p-8 rounded-[2.5rem] border-2 border-transparent hover:border-blue-100 hover:shadow-lg transition-all cursor-pointer active:scale-[0.98]"
+                    >
+                      <div className="flex justify-between items-start mb-6">
+                        <div className="w-12 h-12 bg-white text-blue-600 rounded-2xl flex items-center justify-center shadow-sm">
+                          <Icon path="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </div>
+                        <span className={`text-[8px] font-black uppercase tracking-widest px-3 py-1 rounded-full ${event.status === 'Upcoming' ? 'bg-blue-50 text-blue-600' : 'bg-green-50 text-green-600'}`}>
+                          {event.status}
+                        </span>
+                      </div>
+                      <h3 className="text-xl font-black text-slate-800 uppercase tracking-tight mb-2 group-hover:text-blue-600 transition-colors">
+                        {event.title}
+                      </h3>
+                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                        {event.date} • {event.location}
+                      </p>
                     </div>
-                    <h3 className="text-xl font-black text-slate-800 uppercase tracking-tight mb-2 group-hover:text-blue-600 transition-colors">{event.title}</h3>
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{event.date} • {event.location}</p>
+                  ))
+                ) : (
+                  <div className="col-span-full h-64 flex flex-col items-center justify-center text-slate-300 gap-4 opacity-60">
+                    <Icon path="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" className="w-12 h-12" />
+                    <span className="text-[10px] font-black uppercase tracking-widest">No events matching your search</span>
                   </div>
-                ))}
+                )}
               </div>
             </section>
           </div>
@@ -125,9 +166,9 @@ const ParticipantDash = () => {
       <footer className="bg-white border-t border-gray-100 px-12 py-5 flex justify-between items-center sticky bottom-0 z-50 shrink-0">
         <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest">© 2026 QRBase Meetings</div>
         <nav className="flex gap-8 text-[11px] font-bold items-center uppercase tracking-widest">
-           <button onClick={() => navigate('/participant')} className="text-blue-600 hover:text-gray-400 transition-colors bg-transparent border-none p-0 cursor-pointer font-bold">My Events</button>
-           <button onClick={() => navigate('/qr')} className="text-blue-600 hover:text-gray-400 transition-colors bg-transparent border-none p-0 cursor-pointer font-bold">QR Codes</button>
-           <button onClick={() => navigate('/login')} className="text-red-500 hover:text-gray-400 transition-colors bg-transparent border-none p-0 cursor-pointer font-bold">Log Out</button>
+            <button onClick={() => navigate('/participant')} className="text-blue-600 hover:text-gray-400 transition-colors bg-transparent border-none p-0 cursor-pointer font-bold">My Events</button>
+            <button onClick={() => navigate('/qr')} className="text-blue-600 hover:text-gray-400 transition-colors bg-transparent border-none p-0 cursor-pointer font-bold">QR Codes</button>
+            <button onClick={() => navigate('/login')} className="text-red-500 hover:text-gray-400 transition-colors bg-transparent border-none p-0 cursor-pointer font-bold">Log Out</button>
         </nav>
       </footer>
     </div>

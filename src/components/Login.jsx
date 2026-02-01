@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-// Standardized Input component
 function InputField({ id, type, placeholder, label, icon }) {
   return (
     <div className="flex flex-col gap-1.5">
@@ -53,7 +52,7 @@ export default function Login() {
     <div className="min-h-screen flex flex-col bg-[#e9eff6] font-sans text-slate-700">
       
       {/* HEADER */}
-      <header className="flex justify-between items-center px-12 py-5 bg-white shadow-sm sticky top-0 z-50">
+      <header className="flex justify-between items-center px-12 py-5 bg-white shadow-sm sticky top-0 z-50 shrink-0">
         <h1 
           onClick={() => navigate("/")} 
           className="text-2xl font-black text-[#1e40af] tracking-tight cursor-pointer"
@@ -62,7 +61,6 @@ export default function Login() {
         </h1>
         <nav className="hidden md:flex items-center gap-10">
           <div className="flex gap-8 text-sm font-bold items-center uppercase tracking-widest">
-            {/* UPDATED: Home button now redirects using navigate("/") */}
             <button 
               onClick={() => navigate("/home")}
               className="text-blue-600 hover:text-gray-400 transition-colors font-bold text-sm uppercase tracking-widest outline-none bg-transparent border-none p-0 cursor-pointer"
@@ -83,7 +81,7 @@ export default function Login() {
 
             <button 
               onClick={() => navigate("/")}
-              className="bg-[#2563eb] text-white px-7 py-2.5 rounded-xl text-sm font-black shadow-lg shadow-blue-200 hover:bg-gray-500 transition-all active:scale-95"
+              className="bg-[#2563eb] text-white px-7 py-2.5 rounded-2xl text-sm font-black shadow-lg shadow-blue-200 hover:bg-gray-500 transition-all active:scale-95"
             >
               Sign Up
             </button>
@@ -125,27 +123,30 @@ export default function Login() {
             </button>
           </form>
 
-          <div className="mt-10 text-center pt-6 border-t border-gray-50">
-            <p className="text-sm text-gray-500 font-medium flex flex-col items-center gap-2">
-              <span className="text-[10px] text-gray-400 font-black uppercase tracking-widest">New here?</span>
-              <button 
-                onClick={() => navigate("/")} 
-                className="text-blue-600 font-black text-sm uppercase tracking-widest hover:text-gray-400 transition-colors outline-none bg-transparent border-none p-0 cursor-pointer"
-              >
-                Create an account
-              </button>
-            </p>
+          <div className="mt-10 text-center pt-6 border-t border-gray-50 flex flex-col items-center gap-2">
+            <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">New here?</p>
+            <button 
+              onClick={() => navigate("/")} 
+              className="text-blue-600 font-black text-sm uppercase tracking-widest hover:text-gray-400 transition-colors outline-none bg-transparent border-none p-0 cursor-pointer"
+            >
+              Create an account
+            </button>
           </div>
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-white border-t border-gray-100 px-12 py-6 flex justify-between items-center text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+      {/* FOOTER */}
+      <footer className="bg-white border-t border-gray-100 px-12 py-5 flex justify-between items-center text-[10px] font-bold text-gray-400 uppercase tracking-widest shrink-0">
         <div>© 2026 QRBase Meetings</div>
-        <nav className="flex gap-8">
+        <nav className="flex gap-8 items-center">
+          <button 
+            onClick={() => navigate("/home")} 
+            className="text-blue-600 hover:text-gray-400 transition-colors bg-transparent border-none p-0 font-bold text-[10px] uppercase tracking-widest cursor-pointer outline-none"
+          >
+            Home
+          </button>
           <a href="#" className="text-blue-600 hover:text-gray-400 transition-colors">Terms</a>
           <a href="#" className="text-blue-600 hover:text-gray-400 transition-colors">Privacy</a>
-          <a href="#" className="text-blue-600 hover:text-gray-400 transition-colors">Contact</a>
         </nav>
       </footer>
     </div>

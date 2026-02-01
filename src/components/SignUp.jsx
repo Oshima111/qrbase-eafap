@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// Updated Input component to handle value and onChange
 function InputField({ id, type, placeholder, label, icon, value, onChange }) {
   return (
     <div className="flex flex-col gap-1.5">
@@ -31,15 +30,11 @@ function InputField({ id, type, placeholder, label, icon, value, onChange }) {
 
 export default function SignUp() {
   const navigate = useNavigate();
-  
-  // State for password validation
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    // Validation Check
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;

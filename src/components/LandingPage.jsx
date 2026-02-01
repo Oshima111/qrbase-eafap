@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// Refined Icon components
 const QRAttendanceIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#1e40af" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="overflow-visible">
     <path d="M3 7V5a2 2 0 0 1 2-2h2m10 0h2a2 2 0 0 1 2 2v2m0 10v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2" />
@@ -60,7 +59,6 @@ const LandingPage = () => {
             <a href="#how-it-works" className="text-blue-600 hover:text-gray-400 transition-colors">How It Works</a>
           </div>
           <div className="flex gap-8 items-center border-l pl-8 border-gray-100">
-            {/* UPDATED: LOG IN - Blue text only style */}
             <button 
               onClick={() => navigate('/login')}
               className="text-blue-600 hover:text-gray-400 transition-colors font-black text-sm uppercase tracking-widest outline-none bg-transparent border-none p-0 cursor-pointer"

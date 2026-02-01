@@ -114,7 +114,7 @@ const OrganizerDash = () => {
         </main>
       </div>
 
-      {/* FOOTER - ONLY SHOWING DASHBOARD, EVENTS, TEAM, ATTENDANCE */}
+      {/* FOOTER  */}
       <footer className="bg-white border-t border-gray-100 px-12 py-5 flex justify-between items-center sticky bottom-0 z-50 shrink-0">
         <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
           © 2026 QRBase Meetings
